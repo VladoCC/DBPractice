@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DBPractice</string>
+    <string name="data_delete">Deleted</string>
+</resources>

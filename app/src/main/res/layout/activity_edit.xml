@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/add_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <LinearLayout
+        android:id="@+id/add_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="100"
+        android:orientation="vertical"></LinearLayout>
+
+    <com.ornach.nobobutton.NoboButton
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:padding="1dp"
+        android:weightSum="2"
+        app:nb_backgroundColor="@color/colorPrimary"
+        app:nb_borderColor="#FFFFFF"
+        app:nb_drawableResource="@drawable/ic_add_white_24dp"
+        app:nb_focusColor="@color/colorAccent"
+        app:nb_iconPosition="left"
+        app:nb_iconSize="24dp"
+        app:nb_textSize="24dp"
+        app:nb_text="Add"
+        app:nb_textColor="#FFF" />
+</LinearLayout>

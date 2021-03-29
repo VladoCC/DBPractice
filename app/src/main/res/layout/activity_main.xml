@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.ornach.nobobutton.NoboButton
+                    android:id="@+id/main_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:weightSum="2"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:nb_backgroundColor="@color/colorPrimary"
+                    app:nb_borderColor="#FFFFFF"
+                    app:nb_borderWidth="10dp"
+                    app:nb_focusColor="@color/colorAccent"
+                    app:nb_fontIcon="&#xf291;"
+                    app:nb_iconPosition="top"
+                    app:nb_iconSize="70dp"
+                    app:nb_radius="20dp"
+                    app:nb_text="Orders"
+                    app:nb_textColor="#FFF" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.ornach.nobobutton.NoboButton
+                    android:id="@+id/main_custom"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:weightSum="2"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:nb_backgroundColor="@color/colorPrimary"
+                    app:nb_borderColor="#FFFFFF"
+                    app:nb_borderWidth="10dp"
+                    app:nb_focusColor="@color/colorAccent"
+                    app:nb_fontIcon="&#xf2b9;"
+                    app:nb_iconPosition="top"
+                    app:nb_iconSize="70dp"
+                    app:nb_radius="20dp"
+                    app:nb_text="Customers"
+                    app:nb_textColor="#FFF">
+
+                </com.ornach.nobobutton.NoboButton>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.ornach.nobobutton.NoboButton
+                    android:id="@+id/main_emp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:weightSum="2"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:nb_backgroundColor="@color/colorPrimary"
+                    app:nb_borderColor="#FFFFFF"
+                    app:nb_borderWidth="10dp"
+                    app:nb_focusColor="@color/colorAccent"
+                    app:nb_fontIcon="&#xf0b1;"
+                    app:nb_iconPosition="top"
+                    app:nb_iconSize="70dp"
+                    app:nb_radius="20dp"
+                    app:nb_text="Employees"
+                    app:nb_textColor="#FFF" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.ornach.nobobutton.NoboButton
+                    android:id="@+id/main_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:weightSum="2"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:nb_backgroundColor="@color/colorPrimary"
+                    app:nb_borderColor="#FFFFFF"
+                    app:nb_borderWidth="10dp"
+                    app:nb_focusColor="@color/colorAccent"
+                    app:nb_fontIcon="&#xf02a;"
+                    app:nb_iconPosition="top"
+                    app:nb_iconSize="70dp"
+                    app:nb_radius="20dp"
+                    app:nb_text="Products"
+                    app:nb_textColor="#FFF">
+
+                </com.ornach.nobobutton.NoboButton>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>
