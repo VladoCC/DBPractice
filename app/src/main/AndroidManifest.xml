@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".EditActivity"></activity>
+        <activity android:name=".EditOrderActivity"></activity>
         <activity android:name=".EditCustomActivity"></activity>
+        <activity android:name=".EditEmpActivity"></activity>
+        <activity android:name=".EditProductActivity"></activity>
         <activity android:name=".DataActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

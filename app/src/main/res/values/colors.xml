@@ -6,4 +6,5 @@
     <color name="colorDelete">#ff6060</color>
     <color name="colorAdd">#4CAF50</color>
     <color name="colorGrey">#5A5A5A</color>
+    <color name="colorWhite">#FFF</color>
 </resources>

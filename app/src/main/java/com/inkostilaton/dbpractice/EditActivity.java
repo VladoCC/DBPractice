@@ -51,6 +51,9 @@ public abstract class EditActivity extends AppCompatActivity {
                 finish();
             }
         });
+        if (index > -1) {
+            addButton.setText("Edit");
+        }
     }
 
     protected abstract void inputData(View v, int index);

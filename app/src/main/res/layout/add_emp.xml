@@ -65,14 +65,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1000" />
 
-        <ImageButton
-            android:id="@+id/add_emp_superior"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@drawable/rect"
-            app:srcCompat="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +79,7 @@
             android:layout_weight="1000" />
 
         <ImageButton
-            android:id="@+id/add_emp_department"
+            android:id="@+id/add_emp_department_new"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -108,7 +100,7 @@
             android:layout_weight="1000" />
 
         <ImageButton
-            android:id="@+id/add_emp_office"
+            android:id="@+id/add_emp_office_new"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"

@@ -20,9 +20,8 @@ android:orientation="vertical">
 
     <TextView
         android:id="@+id/order_trans_sum"
-        android:layout_width="wrap_content"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
-        android:paddingRight="40dp"
         android:text="10"
         android:textAlignment="viewStart"
         android:textColor="@color/colorAdd"

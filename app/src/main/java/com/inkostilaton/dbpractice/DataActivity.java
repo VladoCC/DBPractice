@@ -103,26 +103,31 @@ public class DataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public int getResId() {
-        if (type == 2) {
-            return R.layout.add_custom;
+    public Intent getAddIntent() {
+        Intent intent = null;
+        if (type == 1) {
+            intent = new Intent(this, EditOrderActivity.class);
+            intent.putExtra("layout", R.layout.add_order);
+        } else if (type == 2) {
+            intent = new Intent(this, EditCustomActivity.class);
+            intent.putExtra("layout", R.layout.add_custom);
         }else if (type == 3) {
-            return R.layout.add_emp;
+            intent = new Intent(this, EditEmpActivity.class);
+            intent.putExtra("layout", R.layout.add_emp);
         } else if (type == 4) {
-            return R.layout.add_product;
+            intent = new Intent(this, EditProductActivity.class);
+            intent.putExtra("layout", R.layout.add_product);
         }
-        return type;//todo change return
+        return intent;//todo change return
     }
 
     public void openAdd() {
-        Intent intent = new Intent(this, EditCustomActivity.class);
-        intent.putExtra("layout", getResId());
+        Intent intent = getAddIntent();
         startActivityForResult(intent, 0);
     }
 
     public void openAdd(int index) {
-        Intent intent = new Intent(this, EditCustomActivity.class);
-        intent.putExtra("layout", getResId());
+        Intent intent = getAddIntent();
         intent.putExtra("index", index);
         startActivityForResult(intent, 0);
     }
