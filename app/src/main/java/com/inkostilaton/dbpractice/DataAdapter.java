@@ -48,6 +48,7 @@ public abstract class DataAdapter extends SwipeAdapter {
     @Override
     public void onSwipe(int position, int direction) {
         if (direction == SWIPE_LEFT) {
+            delete(position);
             getData().removeVisible(position);
             notifyItemRemoved(position);
             Toast toast = Toast.makeText(mContext, "Deleted item at position " + position, Toast.LENGTH_SHORT);
@@ -55,6 +56,10 @@ public abstract class DataAdapter extends SwipeAdapter {
         } else {
             ((DataActivity) mContext).openAdd();
         }
+    }
+
+    protected void delete(int index) {
+
     }
 
     protected abstract RecyclerView.ViewHolder onCreateCustomViewHolder(View view);

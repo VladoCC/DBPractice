@@ -106,6 +106,10 @@ public class DataActivity extends AppCompatActivity {
     public int getResId() {
         if (type == 2) {
             return R.layout.add_custom;
+        }else if (type == 3) {
+            return R.layout.add_emp;
+        } else if (type == 4) {
+            return R.layout.add_product;
         }
         return type;//todo change return
     }
@@ -113,14 +117,14 @@ public class DataActivity extends AppCompatActivity {
     public void openAdd() {
         Intent intent = new Intent(this, EditCustomActivity.class);
         intent.putExtra("layout", getResId());
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     public void openAdd(int index) {
         Intent intent = new Intent(this, EditCustomActivity.class);
         intent.putExtra("layout", getResId());
         intent.putExtra("index", index);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     @Override
