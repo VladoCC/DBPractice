@@ -93,7 +93,7 @@ public class EditOrderActivity extends EditActivity {
                         productText.setText(productMap.get("name"));
                         LinearLayout include = parent.findViewById(R.id.elem_include);
                         include.addView(view);
-                        final int pos = transaction.getChildCount();
+                        final int pos = product.getChildCount();
                         ImageView image = parent.findViewById(R.id.elem_delete);
                         image.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -102,7 +102,7 @@ public class EditOrderActivity extends EditActivity {
                                 unlinkProduct(pos); // unsure if it's a good method signature
                             }
                         });
-                        transaction.addView(parent);
+                        product.addView(parent);
                     }
                 });
                 builder.create().show();
