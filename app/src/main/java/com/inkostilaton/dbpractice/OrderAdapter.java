@@ -119,10 +119,12 @@ public class OrderAdapter extends DataAdapter {
         holder.endDate.setText(order.endDate);
         holder.sum.setText(order.sum + "");
 
+        holder.products.removeAllViews();
         for (String product: order.products) {
             holder.addProduct(product);
         }
 
+        holder.transactions.removeAllViews();
         for (Transaction transaction: order.transactions) {
             holder.addTransaction(transaction.value, transaction.date);
         }

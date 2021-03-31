@@ -4,16 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    android:background="@color/colorWhite"
-    android:backgroundTint="#FFFFFF">
+    android:layout_marginBottom="8dp">
 
-    <include
+    <LinearLayout
         android:id="@+id/elem_include"
-        layout="@layout/list_item_product"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="100" />
+        android:layout_weight="100"
+        android:orientation="horizontal" />
 
     <ImageView
         android:id="@+id/elem_delete"

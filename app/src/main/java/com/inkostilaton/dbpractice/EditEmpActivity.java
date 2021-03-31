@@ -5,16 +5,22 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+
+import java.util.Calendar;
 
 public class EditEmpActivity extends EditActivity {
 
     private EditText name;
     private EditText title;
-    private EditText startDate;
-    private EditText endDate;
+
+    private CalendarView startDate;
+    private CalendarView endDate;
 
     private Spinner superior;
     private Spinner department;
@@ -29,6 +35,7 @@ public class EditEmpActivity extends EditActivity {
 
         name = findViewById(R.id.add_emp_name);
         title = findViewById(R.id.add_emp_title);
+
         startDate = findViewById(R.id.add_emp_start);
         endDate = findViewById(R.id.add_emp_end);
 
@@ -39,6 +46,22 @@ public class EditEmpActivity extends EditActivity {
         departmentAdd = findViewById(R.id.add_emp_department_new);
         addressAdd = findViewById(R.id.add_emp_office_new);
 
+        startDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                view.setDate(calendar.getTimeInMillis());
+            }
+        });
+        endDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                view.setDate(calendar.getTimeInMillis());
+            }
+        });
         departmentAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +112,11 @@ public class EditEmpActivity extends EditActivity {
 
     @Override
     protected void inputData(View v, int index) {
+
+    }
+
+    @Override
+    protected void newData(View v) {
 
     }
 

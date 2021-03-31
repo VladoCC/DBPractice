@@ -36,7 +36,9 @@ public abstract class EditActivity extends AppCompatActivity {
         LinearLayout layout = findViewById(R.id.add_body);
 
         final int index = getIntent().getIntExtra("index", -1);
-        if (index > -1) {
+        if (index == -1) {
+            newData(view);
+        } else {
             inputData(view, index);
         }
 
@@ -57,6 +59,8 @@ public abstract class EditActivity extends AppCompatActivity {
     }
 
     protected abstract void inputData(View v, int index);
+
+    protected abstract void newData(View v);
 
     protected abstract void addData(View v, int index);
 }

@@ -29,30 +29,60 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_emp_start"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Start Date"
-            android:inputType="date" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="Start Date"
+                android:textAlignment="center"
+                android:textColor="@android:color/primary_text_light"
+                android:textStyle="bold" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <CalendarView
+                android:id="@+id/add_emp_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_emp_end"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="End Date"
-            android:inputType="date|none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="End Date"
+                android:textAlignment="center"
+                android:textColor="@android:color/primary_text_light"
+                android:textStyle="bold" />
+
+            <CalendarView
+                android:id="@+id/add_emp_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,8 +92,7 @@
         <Spinner
             android:id="@+id/add_emp_superior_select"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1000" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -85,6 +114,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/rect"
+            android:contentDescription="Add Depatment"
             app:srcCompat="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 
@@ -106,6 +136,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/rect"
+            android:contentDescription="Add Office"
             app:srcCompat="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 </LinearLayout>

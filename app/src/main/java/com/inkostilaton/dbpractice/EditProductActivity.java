@@ -5,15 +5,21 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+
+import java.util.Calendar;
+
 public class EditProductActivity extends EditActivity {
 
     private EditText name;
-    private EditText startDate;
-    private EditText endDate;
+
+    private CalendarView startDate;
+    private CalendarView endDate;
 
     private Spinner type;
     private ImageButton typeAdd;
@@ -23,12 +29,29 @@ public class EditProductActivity extends EditActivity {
         super.onCreate(savedInstanceState);
 
         name = findViewById(R.id.add_prod_name);
+
         startDate = findViewById(R.id.add_prod_start);
         endDate = findViewById(R.id.add_prod_end);
 
-        type = findViewById(R.id.add_emp_office_select);
-        typeAdd = findViewById(R.id.add_emp_department_new);
+        type = findViewById(R.id.add_prod_type_select);
+        typeAdd = findViewById(R.id.add_prod_type);
 
+        startDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                view.setDate(calendar.getTimeInMillis());
+            }
+        });
+        endDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                view.setDate(calendar.getTimeInMillis());
+            }
+        });
         typeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +83,11 @@ public class EditProductActivity extends EditActivity {
 
     @Override
     protected void inputData(View v, int index) {
+
+    }
+
+    @Override
+    protected void newData(View v) {
 
     }
 

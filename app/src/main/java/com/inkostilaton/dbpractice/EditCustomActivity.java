@@ -28,6 +28,11 @@ public class EditCustomActivity extends EditActivity {
     }
 
     @Override
+    protected void newData(View v) {
+
+    }
+
+    @Override
     protected void addData(View v, int index) {
 
     }
