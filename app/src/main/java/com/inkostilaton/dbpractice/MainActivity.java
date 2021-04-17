@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private NoboButton empButton;
     private NoboButton productButton;
 
+    public static Database database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 openData(4);
             }
         });
+
+        database = new Database(MainActivity.this);
     }
 
     private void openData(int type) {

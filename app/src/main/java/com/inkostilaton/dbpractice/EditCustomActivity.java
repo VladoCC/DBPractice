@@ -3,6 +3,9 @@ package com.inkostilaton.dbpractice;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class EditCustomActivity extends EditActivity {
 
@@ -34,6 +37,7 @@ public class EditCustomActivity extends EditActivity {
 
     @Override
     protected void addData(View v, int index) {
-
+        CustomModel customer = new CustomModel(index, name.getText().toString(), postal.getText().toString(), state.getText().toString(), city.getText().toString(), address.getText().toString());
+        database.addCustomer(customer);
     }
 }

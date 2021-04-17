@@ -1,11 +1,19 @@
 package com.inkostilaton.dbpractice;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.inkostilaton.dbpractice.Database.CUSTOMER;
+import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class CustomAdapter extends DataAdapter {
 
@@ -13,8 +21,8 @@ public class CustomAdapter extends DataAdapter {
 
     public CustomAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView, R.layout.item_custom);
-        customers.add(new Customer("Sam Right", "111555, Prim, Vladivostok, test"));
-        customers.add(new Customer("Jim Wrong", "111555, Prim, Vladivostok, test"));
+        //customers.add(new Customer("Sam Right", "111555, Prim, Vladivostok, test"));
+        //customers.add(new Customer("Jim Wrong", "111555, Prim, Vladivostok, test"));
     }
 
     private class Customer implements VisibilityList.Searchable {
@@ -50,6 +58,28 @@ public class CustomAdapter extends DataAdapter {
 
     @Override
     public VisibilityList getData() {
+        String queryString = "SELECT * FROM " + CUSTOMER;
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int cust_id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String postal = cursor.getString(2);
+                String state = cursor.getString(3);
+                String city = cursor.getString(4);
+                String address = cursor.getString(5);
+
+                Customer newCustomer =  new Customer(name, postal + state + city + address);
+                customers.add(newCustomer);
+            }
+            while (cursor.moveToNext());
+        }
+        else {
+
+        }
+        cursor.close();
+        db.close();
         return customers;
     }
 

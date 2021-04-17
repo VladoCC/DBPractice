@@ -99,7 +99,6 @@ public class DataActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_add) {
             openAdd();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
