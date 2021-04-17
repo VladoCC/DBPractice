@@ -17,7 +17,7 @@ import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class CustomAdapter extends DataAdapter {
 
-    private VisibilityList<Customer> customers = new VisibilityList<>();
+    private VisibilityList<Customer> customers;
 
     public CustomAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView, R.layout.item_custom);
@@ -25,6 +25,8 @@ public class CustomAdapter extends DataAdapter {
 
     @Override
     protected void initData() {
+        customers = new VisibilityList<>();
+
         String queryString = "SELECT * FROM " + CUSTOMER;
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);

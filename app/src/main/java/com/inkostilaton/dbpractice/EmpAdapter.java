@@ -72,6 +72,11 @@ public class EmpAdapter extends DataAdapter {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onBindSwipeViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         Employee emp = employees.get(i);
         EmpViewHolder holder = (EmpViewHolder) viewHolder;

@@ -109,6 +109,11 @@ public class OrderAdapter extends DataAdapter {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onBindSwipeViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         Order order = orders.get(i);
         OrderViewHolder holder = (OrderViewHolder) viewHolder;

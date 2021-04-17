@@ -60,6 +60,11 @@ public class ProductAdapter extends DataAdapter {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onBindSwipeViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         Product product = products.get(i);
         ProductViewHolder holder = (ProductViewHolder) viewHolder;
