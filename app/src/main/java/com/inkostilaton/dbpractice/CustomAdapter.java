@@ -21,8 +21,34 @@ public class CustomAdapter extends DataAdapter {
 
     public CustomAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView, R.layout.item_custom);
-        //customers.add(new Customer("Sam Right", "111555, Prim, Vladivostok, test"));
-        //customers.add(new Customer("Jim Wrong", "111555, Prim, Vladivostok, test"));
+    }
+
+    @Override
+    protected void initData() {
+        String queryString = "SELECT * FROM " + CUSTOMER;
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int cust_id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String postal = cursor.getString(2);
+                String state = cursor.getString(3);
+                String city = cursor.getString(4);
+                String address = cursor.getString(5);
+
+                Customer newCustomer =  new Customer(name, postal + state + city + address);
+                customers.add(newCustomer);
+            }
+            while (cursor.moveToNext());
+        }
+        else {
+
+        }
+        cursor.close();
+        db.close();
+
+        notifyDataSetChanged();
     }
 
     private class Customer implements VisibilityList.Searchable {
@@ -58,28 +84,6 @@ public class CustomAdapter extends DataAdapter {
 
     @Override
     public VisibilityList getData() {
-        String queryString = "SELECT * FROM " + CUSTOMER;
-        SQLiteDatabase db = database.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
-        if (cursor.moveToFirst()) {
-            do {
-                int cust_id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                String postal = cursor.getString(2);
-                String state = cursor.getString(3);
-                String city = cursor.getString(4);
-                String address = cursor.getString(5);
-
-                Customer newCustomer =  new Customer(name, postal + state + city + address);
-                customers.add(newCustomer);
-            }
-            while (cursor.moveToNext());
-        }
-        else {
-
-        }
-        cursor.close();
-        db.close();
         return customers;
     }
 

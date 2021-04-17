@@ -20,6 +20,7 @@ public abstract class DataAdapter extends SwipeAdapter {
         mContext = context;
         mRecyclerView = recyclerView;
         this.layoutId = layoutId;
+        initData();
     }
 
     @Override
@@ -65,6 +66,8 @@ public abstract class DataAdapter extends SwipeAdapter {
     protected abstract RecyclerView.ViewHolder onCreateCustomViewHolder(View view);
 
     public abstract VisibilityList getData();
+
+    protected abstract void initData();
 
     public void setSearchQuery(String query) {
         getData().setQuery(query);
