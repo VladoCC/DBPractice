@@ -47,8 +47,6 @@ public class CustomAdapter extends DataAdapter {
         }
         cursor.close();
         db.close();
-
-        notifyDataSetChanged();
     }
 
     private class Customer implements VisibilityList.Searchable {

@@ -20,7 +20,9 @@ public abstract class DataAdapter extends SwipeAdapter {
         mContext = context;
         mRecyclerView = recyclerView;
         this.layoutId = layoutId;
+        
         initData();
+        notifyDataSetChanged();
     }
 
     @Override
