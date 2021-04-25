@@ -1,18 +1,23 @@
 package com.inkostilaton.dbpractice;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.inkostilaton.dbpractice.Database.PRODUCT;
+import static com.inkostilaton.dbpractice.MainActivity.database;
+
 public class ProductAdapter extends DataAdapter {
-    VisibilityList<Product> products = new VisibilityList<>();
+
+    VisibilityList<Product> products;
 
     public ProductAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView, R.layout.item_product);
-        products.add(new Product("Chair", "Furniture", "17.01.20", "..."));
     }
 
     public class Product implements VisibilityList.Searchable {
@@ -61,7 +66,26 @@ public class ProductAdapter extends DataAdapter {
 
     @Override
     protected void initData() {
+        products = new VisibilityList<>();
 
+        String queryString = "SELECT * FROM " + PRODUCT;
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int prod_id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String type = cursor.getString(2);
+                String startDate = cursor.getString(3);
+                String endDate = cursor.getString(4);
+
+                Product newProduct =  new Product(name, type, startDate, endDate);
+                products.add(newProduct);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
     }
 
     @Override

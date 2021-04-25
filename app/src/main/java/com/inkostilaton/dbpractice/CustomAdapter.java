@@ -9,9 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.inkostilaton.dbpractice.Database.CUSTOMER;
 import static com.inkostilaton.dbpractice.MainActivity.database;
 
@@ -39,13 +36,10 @@ public class CustomAdapter extends DataAdapter {
                 String city = cursor.getString(4);
                 String address = cursor.getString(5);
 
-                Customer newCustomer =  new Customer(name, postal + state + city + address);
+                Customer newCustomer =  new Customer(name, postal + ", " + state + ", " + city + ", " + address);
                 customers.add(newCustomer);
             }
             while (cursor.moveToNext());
-        }
-        else {
-
         }
         cursor.close();
         db.close();

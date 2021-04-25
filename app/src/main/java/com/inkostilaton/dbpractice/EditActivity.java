@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +53,7 @@ public abstract class EditActivity extends AppCompatActivity {
         if (index > -1) {
             addButton.setText("Edit");
         }
+
     }
 
     protected abstract void inputData(View v, int index);

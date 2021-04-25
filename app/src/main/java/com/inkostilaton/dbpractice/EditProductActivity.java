@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
@@ -12,7 +13,11 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class EditProductActivity extends EditActivity {
 
@@ -24,6 +29,8 @@ public class EditProductActivity extends EditActivity {
     private Spinner type;
     private ImageButton typeAdd;
 
+    ArrayAdapter<CharSequence> typeAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +41,9 @@ public class EditProductActivity extends EditActivity {
         endDate = findViewById(R.id.add_prod_end);
 
         type = findViewById(R.id.add_prod_type_select);
+        typeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, database.getTypes());
+        type.setAdapter(typeAdapter);
+
         typeAdd = findViewById(R.id.add_prod_type);
 
         startDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -56,7 +66,7 @@ public class EditProductActivity extends EditActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditProductActivity.this);
-                builder.setTitle("Department");
+                builder.setTitle("Type");
                 final EditText input = new EditText(EditProductActivity.this);
                 input.setHint("Name");
                 builder.setView(input);
@@ -78,7 +88,8 @@ public class EditProductActivity extends EditActivity {
     }
 
     private void addType(String name) {
-
+        ProductTypeModel productType = new ProductTypeModel(name);
+        database.addProductType(productType);
     }
 
     @Override
@@ -93,6 +104,10 @@ public class EditProductActivity extends EditActivity {
 
     @Override
     protected void addData(View v, int index) {
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedStartDate = sdf.format(new Date(startDate.getDate()));
+        String selectedEndDate = sdf.format(new Date(endDate.getDate()));
+        ProductModel product= new ProductModel(index, name.getText().toString(), type.getSelectedItem().toString(), selectedStartDate, selectedEndDate);
+        database.addProduct(product);
     }
 }

@@ -1,18 +1,23 @@
 package com.inkostilaton.dbpractice;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.inkostilaton.dbpractice.Database.EMPLOYEE;
+import static com.inkostilaton.dbpractice.MainActivity.database;
+
 public class EmpAdapter extends DataAdapter {
-    private VisibilityList<Employee> employees = new VisibilityList<>();
+
+    private VisibilityList<Employee> employees;
 
     public EmpAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView, R.layout.item_emp);
-        employees.add(new Employee("Bob Right","Cleaner","Cleaning", "address", "Jim Wrong", "17.01.20", "..."));
     }
 
     public class Employee implements VisibilityList.Searchable {
@@ -71,9 +76,32 @@ public class EmpAdapter extends DataAdapter {
         return employees;
     }
 
+
     @Override
     protected void initData() {
+        employees = new VisibilityList<>();
 
+        String queryString = "SELECT * FROM " + EMPLOYEE;
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int emp_id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String title = cursor.getString(2);
+                String department = cursor.getString(3);
+                String office = cursor.getString(4);
+                String superior = cursor.getString(5);
+                String startDate = cursor.getString(6);
+                String endDate = cursor.getString(7);
+
+                Employee newEmployee =  new Employee(name, title, department, office, superior, startDate, endDate);
+                employees.add(newEmployee);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
     }
 
     @Override

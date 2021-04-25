@@ -1,7 +1,6 @@
 package com.inkostilaton.dbpractice;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class VisibilityList<T extends VisibilityList.Searchable> {
 

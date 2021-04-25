@@ -4,18 +4,25 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import com.inkostilaton.dbpractice.EmpAdapter;
 
 import androidx.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
+import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class EditEmpActivity extends EditActivity {
-
     private EditText name;
     private EditText title;
 
@@ -29,8 +36,13 @@ public class EditEmpActivity extends EditActivity {
     private ImageButton departmentAdd;
     private ImageButton addressAdd;
 
+    ArrayAdapter<CharSequence> superiorAdapter;
+    ArrayAdapter<CharSequence> departmentAdapter;
+    ArrayAdapter<CharSequence> officeAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         name = findViewById(R.id.add_emp_name);
@@ -40,11 +52,43 @@ public class EditEmpActivity extends EditActivity {
         endDate = findViewById(R.id.add_emp_end);
 
         superior = findViewById(R.id.add_emp_superior_select);
+        superiorAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, database.getEmployeesNames());
+        superior.setAdapter(superiorAdapter);
+
         department = findViewById(R.id.add_emp_department_select);
+        departmentAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, database.getDepartmentsNames());
+        department.setAdapter(departmentAdapter);
+
         address = findViewById(R.id.add_emp_office_select);
+        officeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, database.getAddresses());
+        address.setAdapter(officeAdapter);
 
         departmentAdd = findViewById(R.id.add_emp_department_new);
         addressAdd = findViewById(R.id.add_emp_office_new);
+
+        superior.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        address.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         startDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -122,14 +166,20 @@ public class EditEmpActivity extends EditActivity {
 
     @Override
     protected void addData(View v, int index) {
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedStartDate = sdf.format(new Date(startDate.getDate()));
+        String selectedEndDate = sdf.format(new Date(endDate.getDate()));
+        EmpModel employee = new EmpModel(index, name.getText().toString(), title.getText().toString(), department.getSelectedItem().toString(), address.getSelectedItem().toString(), superior.getSelectedItem().toString(), selectedStartDate, selectedEndDate);
+        database.addEmployee(employee);
     }
 
     private void addDepartment(String name) {
-
+        DepartmentModel department = new DepartmentModel(name);
+        database.addDepartment(department);
     }
 
     private void addAddress(String address) {
-
+        OfficeModel office = new OfficeModel(address);
+        database.addOffice(office);
     }
 }

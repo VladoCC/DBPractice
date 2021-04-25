@@ -1,6 +1,8 @@
 package com.inkostilaton.dbpractice;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,14 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.inkostilaton.dbpractice.Database.EMPLOYEE;
+import static com.inkostilaton.dbpractice.Database.ORDERS;
+import static com.inkostilaton.dbpractice.MainActivity.database;
+
 public class OrderAdapter extends DataAdapter {
-    VisibilityList<Order> orders = new VisibilityList<>();
+    VisibilityList<Order> orders;
 
     public OrderAdapter(Context context, RecyclerView recyclerView) {
         super(context, recyclerView, R.layout.item_order);
-        orders.add(new Order("Bobby False", "In Progress", "Jim Wrong", "17.01.20", "27.01.20",
-                2000, new String[]{"Chair", "Sofa"},
-                new Transaction[]{new Transaction("20.01.20", 100), new Transaction("24.01.20", 50), new Transaction("25.01.20", 300)}));
     }
 
     public class Order implements VisibilityList.Searchable {
@@ -110,7 +113,35 @@ public class OrderAdapter extends DataAdapter {
 
     @Override
     protected void initData() {
+        orders = new VisibilityList<>();
 
+        String queryString = "SELECT * FROM " + ORDERS;
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int order_id = cursor.getInt(0);
+                String customer = cursor.getString(1);
+                String status = cursor.getString(2);
+                String emp = cursor.getString(3);
+                String startDate = cursor.getString(4);
+                String endDate = cursor.getString(5);
+                String sum = cursor.getString(6);
+
+                TransactionModel[] modelArray = database.getTransactionsOfOrder(order_id);
+                int len = modelArray.length;
+                Transaction[] transactionArray = new Transaction[len];
+                for (int i = 0; i < len; i++) {
+                    Transaction newTransaction = new Transaction(modelArray[i].date, modelArray[i].value);
+                    transactionArray[i] = newTransaction;
+                }
+                Order newOrder =  new Order(customer, status, emp, startDate, endDate, Integer.parseInt(sum), database.getProductListOfOrder(order_id), transactionArray);
+                orders.add(newOrder);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
     }
 
     @Override

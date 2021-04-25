@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,12 +19,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class EditOrderActivity extends EditActivity {
 
@@ -42,6 +46,11 @@ public class EditOrderActivity extends EditActivity {
     private LinearLayout product;
     private LinearLayout transaction;
 
+    ArrayAdapter<CharSequence> customerAdapter;
+    ArrayAdapter<CharSequence> employeeAdapter;
+
+    int ordersNow = database.countRecords() + 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +62,12 @@ public class EditOrderActivity extends EditActivity {
         endDate = findViewById(R.id.add_order_end);
 
         custom = findViewById(R.id.add_order_custom_select);
+        customerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, database.getCustomers());
+        custom.setAdapter(customerAdapter);
+
         emp = findViewById(R.id.add_order_emp_select);
+        employeeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, database.getEmployees());
+        emp.setAdapter(employeeAdapter);
 
         addProduct = findViewById(R.id.add_order_product_new);
         addTransaction = findViewById(R.id.add_order_transaction_new);
@@ -86,11 +100,12 @@ public class EditOrderActivity extends EditActivity {
                 builder.setItems(getProductList(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Map<String, String> productMap = getProduct(i);
+                        String productName = getProduct(i);
+                        addProductToList(ordersNow, productName);
                         View view = LayoutInflater.from(EditOrderActivity.this).inflate(R.layout.list_item_product, null);
                         final View parent = LayoutInflater.from(EditOrderActivity.this).inflate(R.layout.remove_layout, null);
                         TextView productText = view.findViewById(R.id.order_prod_name);
-                        productText.setText(productMap.get("name"));
+                        productText.setText(productName);
                         LinearLayout include = parent.findViewById(R.id.elem_include);
                         include.addView(view);
                         final int pos = product.getChildCount();
@@ -115,7 +130,7 @@ public class EditOrderActivity extends EditActivity {
                 builder.setTitle("Transaction");
 
                 final EditText sumInput = new EditText(EditOrderActivity.this);
-                sumInput.setHint("Sum");
+                sumInput.setHint("Value");
                 sumInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
                 final CalendarView calendar = new CalendarView(EditOrderActivity.this);
                 calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -153,7 +168,7 @@ public class EditOrderActivity extends EditActivity {
                             }
                         });
                         transaction.addView(parent);
-                        addTransaction(Integer.parseInt(sumInput.getText().toString()), date);
+                        addTransaction(Integer.parseInt(sumInput.getText().toString()), date, ordersNow);
                     }
                 });
                 builder.setNegativeButton("Cancel", null);
@@ -163,21 +178,33 @@ public class EditOrderActivity extends EditActivity {
     }
 
     private String[] getProductList() {
-        return new String[]{"Test", "test2"};
+        List<String> productList = database.getProducts();
+        int sizeOfArray = productList.size();
+        String[] productArray = new String[sizeOfArray];
+        for (int i = 0; i < sizeOfArray; i++) {
+            productArray[i] = productList.get(i);
+        }
+        return productArray;
     }
 
-    private Map<String, String> getProduct(int index){
-        Map<String, String> map = new HashMap<>();
-        map.put("name", "test");
-        return map;
+    private String getProduct(int index){
+        return getProductList()[index];
     }
 
     private void unlinkProduct(int index) {
 
     }
 
-    private void addTransaction(int sum, Date date) {
+    private void addProductToList(int id, String name) {
+        ProductListModel productListModel = new ProductListModel(id, name);
+        database.addProductList(productListModel);
+    }
 
+    private void addTransaction(int sum, Date date, int order_id) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedDate = sdf.format(date);
+        TransactionModel transaction = new TransactionModel(selectedDate, sum, order_id);
+        database.addTransaction(transaction);
     }
 
     private void removeTransaction(int index) {
@@ -196,6 +223,10 @@ public class EditOrderActivity extends EditActivity {
 
     @Override
     protected void addData(View v, int index) {
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedStartDate = sdf.format(new Date(startDate.getDate()));
+        String selectedEndDate = sdf.format(new Date(endDate.getDate()));
+        OrderModel order = new OrderModel(index, custom.getSelectedItem().toString(), status.getText().toString(), emp.getSelectedItem().toString(), selectedStartDate, selectedEndDate, sum.getText().toString(), database.getProductListOfOrder(ordersNow), database.getTransactionsOfOrder(ordersNow));
+        database.addOrder(order);
     }
 }
