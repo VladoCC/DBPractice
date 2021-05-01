@@ -25,6 +25,10 @@ public class OrderModel {
         this.transactions = transactions;
         }
 
+    public int getOrder_id() {
+        return order_id;
+    }
+
     public String getCustomer() {
         return customer;
     }

@@ -46,11 +46,23 @@ public class EditOrderActivity extends EditActivity {
     ArrayAdapter<CharSequence> customerAdapter;
     ArrayAdapter<CharSequence> employeeAdapter;
 
-    int ordersNow = database.countRecords() + 1;
+    int ordersNow;
+    int ordersCount = database.countRecords() + 1;
+    int ordersInProductListCount = database.countOrdersInProductList() + 1;
+    int ordersInTransactionListCount = database.countOrdersInTransactionList() + 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ordersNow = Math.max(ordersCount,ordersInProductListCount);
+
+        if (ordersNow > ordersInProductListCount) {
+            ordersNow = Math.max(ordersCount,ordersInTransactionListCount);
+        }
+        else {
+            ordersNow = Math.max(ordersInProductListCount,ordersInTransactionListCount);
+        }
 
         status = findViewById(R.id.add_order_status);
         sum = findViewById(R.id.add_order_sum);
@@ -225,7 +237,7 @@ public class EditOrderActivity extends EditActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String selectedStartDate = sdf.format(new Date(startDate.getDate()));
         String selectedEndDate = sdf.format(new Date(endDate.getDate()));
-        OrderModel order = new OrderModel(index, custom.getSelectedItem().toString(), status.getText().toString(), emp.getSelectedItem().toString(), selectedStartDate, selectedEndDate, sum.getText().toString(), database.getProductListOfOrder(ordersNow), database.getTransactionsOfOrder(ordersNow));
+        OrderModel order = new OrderModel(ordersNow, custom.getSelectedItem().toString(), status.getText().toString(), emp.getSelectedItem().toString(), selectedStartDate, selectedEndDate, sum.getText().toString(), database.getProductListOfOrder(ordersNow), database.getTransactionsOfOrder(ordersNow));
         database.addOrder(order);
     }
 }

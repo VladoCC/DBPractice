@@ -219,6 +219,7 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        cv.put(ORDER_COLUMN_ORDER_ID, orderModel.getOrder_id());
         cv.put(ORDER_COLUMN_CUSTOMER, orderModel.getCustomer());
         cv.put(ORDER_COLUMN_STATUS, orderModel.getStatus());
         cv.put(ORDER_COLUMN_EMPLOYEE, orderModel.getEmp());
@@ -415,16 +416,50 @@ public class Database extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
         cursor.close();
+        db.close();
         return count;
     }
 
+    public int countOrdersInProductList() {
+        int maxid = 0;
+        String countQuery = "SELECT MAX("+PRODUCT_LIST_COLUMN_ORDER_ID +") FROM " + PRODUCT_LIST;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor.getCount() > 0){
+            cursor.moveToFirst();
+            maxid = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return maxid;
+    }
+
+    public int countOrdersInTransactionList() {
+        int maxid = 0;
+        String countQuery = "SELECT MAX("+TRANSACTIONS_COLUMN_ORDER_ID+") FROM " + TRANSACTIONS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor.getCount() > 0){
+            cursor.moveToFirst();
+            maxid = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return maxid;
+    }
+
     public int findLastDifOrderProductInList(int myOrderId) {
+        int maxid = 0;
         String countQuery = "SELECT * FROM " + PRODUCT_LIST + " WHERE NOT " + PRODUCT_LIST_COLUMN_ORDER_ID + " = " + myOrderId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        int count = cursor.getCount();
+        if (cursor.getCount() > 0){
+            cursor.moveToFirst();
+            maxid = cursor.getInt(0);
+        }
         cursor.close();
-        return count;
+        db.close();
+        return maxid;
     }
 
     public int findLastDifOrderTransaction(int myOrderId) {
@@ -433,6 +468,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
         cursor.close();
+        db.close();
         return count;
     }
 
