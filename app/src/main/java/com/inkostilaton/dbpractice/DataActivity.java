@@ -59,7 +59,7 @@ public class DataActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_data, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -117,7 +117,7 @@ public class DataActivity extends AppCompatActivity {
             intent = new Intent(this, EditProductActivity.class);
             intent.putExtra("layout", R.layout.add_product);
         }
-        return intent;//todo change return
+        return intent;
     }
 
     public void openAdd() {

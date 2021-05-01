@@ -11,18 +11,17 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import com.inkostilaton.dbpractice.EmpAdapter;
 
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class EditEmpActivity extends EditActivity {
+
     private EditText name;
     private EditText title;
 
@@ -118,6 +117,7 @@ public class EditEmpActivity extends EditActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addDepartment(input.getText().toString());
+                        departmentAdapter.add(input.getText().toString());
                         ((BaseAdapter) department.getAdapter()).notifyDataSetChanged();
                         int count = department.getAdapter().getCount();
                         if (count > 0) {
@@ -141,6 +141,7 @@ public class EditEmpActivity extends EditActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addAddress(input.getText().toString());
+                        officeAdapter.add(input.getText().toString());
                         ((BaseAdapter) address.getAdapter()).notifyDataSetChanged();
                         int count = address.getAdapter().getCount();
                         if (count > 0) {

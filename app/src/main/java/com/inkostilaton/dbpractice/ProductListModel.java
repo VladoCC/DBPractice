@@ -1,6 +1,7 @@
 package com.inkostilaton.dbpractice;
 
 public class ProductListModel {
+
     int order_id;
     String product_name;
 

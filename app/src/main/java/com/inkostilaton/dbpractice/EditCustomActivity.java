@@ -3,7 +3,6 @@ package com.inkostilaton.dbpractice;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import static com.inkostilaton.dbpractice.MainActivity.database;
 

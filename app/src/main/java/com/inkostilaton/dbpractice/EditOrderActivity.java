@@ -20,12 +20,9 @@ import androidx.annotation.NonNull;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.inkostilaton.dbpractice.MainActivity.database;
 
@@ -114,7 +111,7 @@ public class EditOrderActivity extends EditActivity {
                             @Override
                             public void onClick(View view) {
                                 ((ViewManager) parent.getParent()).removeView(parent);
-                                unlinkProduct(pos); // unsure if it's a good method signature
+                                unlinkProduct(pos);
                             }
                         });
                         product.addView(parent);

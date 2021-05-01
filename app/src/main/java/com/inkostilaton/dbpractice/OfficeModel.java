@@ -1,6 +1,7 @@
 package com.inkostilaton.dbpractice;
 
 public class OfficeModel {
+
     String address;
 
     public OfficeModel(String address) {

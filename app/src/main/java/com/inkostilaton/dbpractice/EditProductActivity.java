@@ -74,6 +74,7 @@ public class EditProductActivity extends EditActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addType(input.getText().toString());
+                        typeAdapter.add(input.getText().toString());
                         ((BaseAdapter) type.getAdapter()).notifyDataSetChanged();
                         int count = type.getAdapter().getCount();
                         if (count > 0) {

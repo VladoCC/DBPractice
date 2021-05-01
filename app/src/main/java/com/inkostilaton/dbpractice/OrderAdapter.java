@@ -11,11 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.inkostilaton.dbpractice.Database.EMPLOYEE;
 import static com.inkostilaton.dbpractice.Database.ORDERS;
 import static com.inkostilaton.dbpractice.MainActivity.database;
 
 public class OrderAdapter extends DataAdapter {
+
     VisibilityList<Order> orders;
 
     public OrderAdapter(Context context, RecyclerView recyclerView) {

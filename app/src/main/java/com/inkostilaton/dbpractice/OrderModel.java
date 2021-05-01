@@ -25,16 +25,6 @@ public class OrderModel {
         this.transactions = transactions;
         }
 
-    public OrderModel(int order_id, String customer, String status, String emp, String startDate, String endDate, String sum) {
-        this.order_id = order_id;
-        this.customer = customer;
-        this.status = status;
-        this.emp = emp;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.sum = sum;
-    }
-
     public String getCustomer() {
         return customer;
     }
@@ -59,19 +49,4 @@ public class OrderModel {
         return sum;
     }
 
-    public String[] getProducts() {
-        return products;
-    }
-
-    public void setProducts(String[] products) {
-        this.products = products;
-    }
-
-    public void setTransactions(TransactionModel[] transactions) {
-        this.transactions = transactions;
-    }
-
-    public TransactionModel[] getTransactions() {
-        return transactions;
-    }
 }

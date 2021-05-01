@@ -1,6 +1,7 @@
 package com.inkostilaton.dbpractice;
 
 public class TransactionModel {
+
     String date;
     int value;
     int order_id;

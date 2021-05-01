@@ -12,6 +12,7 @@ import com.tr4android.recyclerviewslideitem.SwipeAdapter;
 import com.tr4android.recyclerviewslideitem.SwipeConfiguration;
 
 public abstract class DataAdapter extends SwipeAdapter {
+
     protected Context mContext;
     protected RecyclerView mRecyclerView;
     protected int layoutId;
