@@ -26,17 +26,21 @@ public class EditCustomActivity extends EditActivity {
 
     @Override
     protected void inputData(View v, int index) {
-
     }
 
     @Override
     protected void newData(View v) {
-
     }
 
     @Override
     protected void addData(View v, int index) {
         CustomModel customer = new CustomModel(index, name.getText().toString(), postal.getText().toString(), state.getText().toString(), city.getText().toString(), address.getText().toString());
         database.addCustomer(customer);
+    }
+
+    @Override
+    protected void updateData(View v, int index) {
+        CustomModel customer = new CustomModel(index, name.getText().toString(), postal.getText().toString(), state.getText().toString(), city.getText().toString(), address.getText().toString());
+        database.updateCustomer(customer);
     }
 }

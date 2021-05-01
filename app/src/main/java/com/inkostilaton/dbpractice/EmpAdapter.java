@@ -124,4 +124,5 @@ public class EmpAdapter extends DataAdapter {
         Employee removableEmployee = employees.get(index);
         database.deleteEmployee(removableEmployee.id);
     }
+
 }

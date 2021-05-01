@@ -16,6 +16,10 @@ public class ProductModel {
         this.endDate = endDate;
     }
 
+    public int getProd_id() {
+        return prod_id;
+    }
+
     public String getName() {
         return name;
     }

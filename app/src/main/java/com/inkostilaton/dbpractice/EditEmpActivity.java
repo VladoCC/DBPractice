@@ -156,13 +156,20 @@ public class EditEmpActivity extends EditActivity {
     }
 
     @Override
-    protected void inputData(View v, int index) {
+    protected void updateData(View v, int index) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedStartDate = sdf.format(new Date(startDate.getDate()));
+        String selectedEndDate = sdf.format(new Date(endDate.getDate()));
+        EmpModel employee = new EmpModel(index, name.getText().toString(), title.getText().toString(), department.getSelectedItem().toString(), address.getSelectedItem().toString(), superior.getSelectedItem().toString(), selectedStartDate, selectedEndDate);
+        database.updateEmployee(employee);
+    }
 
+    @Override
+    protected void inputData(View v, int index) {
     }
 
     @Override
     protected void newData(View v) {
-
     }
 
     @Override
@@ -183,4 +190,5 @@ public class EditEmpActivity extends EditActivity {
         OfficeModel office = new OfficeModel(address);
         database.addOffice(office);
     }
+
 }

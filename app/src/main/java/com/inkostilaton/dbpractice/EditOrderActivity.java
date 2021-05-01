@@ -186,6 +186,16 @@ public class EditOrderActivity extends EditActivity {
         });
     }
 
+    @Override
+    protected void updateData(View v, int index) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedStartDate = sdf.format(new Date(startDate.getDate()));
+        String selectedEndDate = sdf.format(new Date(endDate.getDate()));
+        int id = index + 1 + database.getDeletedOrders();
+        OrderModel order = new OrderModel(id, custom.getSelectedItem().toString(), status.getText().toString(), emp.getSelectedItem().toString(), selectedStartDate, selectedEndDate, sum.getText().toString(), database.getProductListOfOrder(id), database.getTransactionsOfOrder(id));
+        database.updateOrder(order);
+    }
+
     private String[] getProductList() {
         List<String> productList = database.getProducts();
         int sizeOfArray = productList.size();
@@ -224,12 +234,10 @@ public class EditOrderActivity extends EditActivity {
 
     @Override
     protected void inputData(View v, int index) {
-
     }
 
     @Override
     protected void newData(View v) {
-
     }
 
     @Override

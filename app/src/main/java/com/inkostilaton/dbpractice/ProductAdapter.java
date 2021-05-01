@@ -105,4 +105,5 @@ public class ProductAdapter extends DataAdapter {
         Product removableProduct = products.get(index);
         database.deleteProduct(removableProduct.id);
     }
+
 }

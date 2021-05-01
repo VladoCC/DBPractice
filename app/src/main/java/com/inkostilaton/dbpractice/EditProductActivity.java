@@ -88,6 +88,15 @@ public class EditProductActivity extends EditActivity {
         });
     }
 
+    @Override
+    protected void updateData(View v, int index) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String selectedStartDate = sdf.format(new Date(startDate.getDate()));
+        String selectedEndDate = sdf.format(new Date(endDate.getDate()));
+        ProductModel product= new ProductModel(index, name.getText().toString(), type.getSelectedItem().toString(), selectedStartDate, selectedEndDate);
+        database.updateProduct(product);
+    }
+
     private void addType(String name) {
         ProductTypeModel productType = new ProductTypeModel(name);
         database.addProductType(productType);
@@ -95,12 +104,10 @@ public class EditProductActivity extends EditActivity {
 
     @Override
     protected void inputData(View v, int index) {
-
     }
 
     @Override
     protected void newData(View v) {
-
     }
 
     @Override

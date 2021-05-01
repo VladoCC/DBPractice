@@ -45,16 +45,24 @@ public abstract class EditActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addData(view, index);
-                setResult(RESULT_OK);
-                finish();
+                if (index > -1) {
+                    updateData(view, index);
+                    setResult(RESULT_OK);
+                    finish();
+                }
+                else {
+                    addData(view, index);
+                    setResult(RESULT_OK);
+                    finish();
+                }
             }
         });
         if (index > -1) {
             addButton.setText("Edit");
         }
-
     }
+
+    protected abstract void updateData(View v, int index);
 
     protected abstract void inputData(View v, int index);
 

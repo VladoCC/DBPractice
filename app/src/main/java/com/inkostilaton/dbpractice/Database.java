@@ -69,6 +69,11 @@ public class Database extends SQLiteOpenHelper {
     public static final String PRODUCT_LIST_COLUMN_ORDER_ID = "ORDER_ID";
     public static final String PRODUCT_LIST_COLUMN_PRODUCT_NAME = "PRODUCT_NAME";
 
+    private int deletedCustomers = 0;
+    private int deletedProducts = 0;
+    private int deletedEmployees = 0;
+    private int deletedOrders = 0;
+
     public Database(@Nullable Context context) {
         super(context, "base.db", null, 1);
     }
@@ -97,10 +102,34 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + CUSTOMER);
+        db.execSQL("DROP TABLE IF EXISTS " + EMPLOYEE);
+        db.execSQL("DROP TABLE IF EXISTS " + DEPARTMENT);
+        db.execSQL("DROP TABLE IF EXISTS " + OFFICE);
+        db.execSQL("DROP TABLE IF EXISTS " + EMPLOYEE);
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCT);
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCT_TYPE);
+        db.execSQL("DROP TABLE IF EXISTS " + ORDERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TRANSACTIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCT_LIST);
+        onCreate(db);
 
     }
 
-    public boolean addCustomer(CustomModel customModel) {
+    public int getDeletedCustomers() {
+        return deletedCustomers;
+    }
+    public int getDeletedProducts() {
+        return deletedProducts;
+    }
+    public int getDeletedEmployees() {
+        return deletedEmployees;
+    }
+    public int getDeletedOrders() {
+        return deletedOrders;
+    }
+
+    public void addCustomer(CustomModel customModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -110,18 +139,10 @@ public class Database extends SQLiteOpenHelper {
         cv.put(CUSTOMER_COLUMN_CITY, customModel.getCity());
         cv.put(CUSTOMER_COLUMN_ADDRESS, customModel.getAddress());
 
-        long insert = db.insert(CUSTOMER,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(CUSTOMER, null, cv);
     }
 
-    public boolean addEmployee(EmpModel empModel) {
+    public void addEmployee(EmpModel empModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -133,52 +154,28 @@ public class Database extends SQLiteOpenHelper {
         cv.put(EMPLOYEE_COLUMN_START_DATE, empModel.getStartDate());
         cv.put(EMPLOYEE_COLUMN_END_DATE, empModel.getEndDate());
 
-        long insert = db.insert(EMPLOYEE,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(EMPLOYEE, null, cv);
     }
 
-    public boolean addDepartment(DepartmentModel departmentModel) {
+    public void addDepartment(DepartmentModel departmentModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(DEPARTMENT_COLUMN_NAME, departmentModel.getName());
 
-        long insert = db.insert(DEPARTMENT,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(DEPARTMENT, null, cv);
     }
 
-    public boolean addOffice(OfficeModel officeModel) {
+    public void addOffice(OfficeModel officeModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(OFFICE_COLUMN_ADDRESS, officeModel.getAddress());
 
-        long insert = db.insert(OFFICE,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(OFFICE, null, cv);
     }
 
-    public boolean addProduct(ProductModel productModel) {
+    public void addProduct(ProductModel productModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -187,35 +184,19 @@ public class Database extends SQLiteOpenHelper {
         cv.put(PRODUCT_COLUMN_START_DATE, productModel.getStartDate());
         cv.put(PRODUCT_COLUMN_END_DATE, productModel.getEndDate());
 
-        long insert = db.insert(PRODUCT,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(PRODUCT, null, cv);
     }
 
-    public boolean addProductType(ProductTypeModel productTypeModel) {
+    public void addProductType(ProductTypeModel productTypeModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(PRODUCT_TYPE_COLUMN_NAME, productTypeModel.getName());
 
-        long insert = db.insert(PRODUCT_TYPE,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(PRODUCT_TYPE, null, cv);
     }
 
-    public boolean addOrder(OrderModel orderModel) {
+    public void addOrder(OrderModel orderModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -227,18 +208,10 @@ public class Database extends SQLiteOpenHelper {
         cv.put(ORDER_COLUMN_END_DATE, orderModel.getEndDate());
         cv.put(ORDER_COLUMN_SUM, orderModel.getSum());
 
-        long insert = db.insert(ORDERS,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(ORDERS, null, cv);
     }
 
-    public boolean addTransaction(TransactionModel transactionModel) {
+    public void addTransaction(TransactionModel transactionModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -246,39 +219,23 @@ public class Database extends SQLiteOpenHelper {
         cv.put(TRANSACTIONS_COLUMN_DATE, transactionModel.getDate());
         cv.put(TRANSACTIONS_COLUMN_ORDER_ID, transactionModel.getOrder_id());
 
-        long insert = db.insert(TRANSACTIONS,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(TRANSACTIONS, null, cv);
     }
 
-    public boolean addProductList(ProductListModel productListModel) {
+    public void addProductList(ProductListModel productListModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(PRODUCT_LIST_COLUMN_ORDER_ID, productListModel.getOrder_id());
         cv.put(PRODUCT_LIST_COLUMN_PRODUCT_NAME, productListModel.getProduct_name());
 
-        long insert = db.insert(PRODUCT_LIST,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        db.insert(PRODUCT_LIST, null, cv);
     }
 
 
     public List<String> getEmployeesNames() {
         ArrayList<String> employeesNames = new ArrayList<>();
-        employeesNames.add("");
+        employeesNames.add("-");
         SQLiteDatabase db = database.getReadableDatabase();
         String queryString = "SELECT " + EMPLOYEE_COLUMN_NAME + " FROM " + EMPLOYEE;
         Cursor cursor = db.rawQuery(queryString, null);
@@ -290,7 +247,7 @@ public class Database extends SQLiteOpenHelper {
                 i++;
             }
             while (cursor.moveToNext());
-            }
+        }
         cursor.close();
         db.close();
         return employeesNames;
@@ -422,10 +379,10 @@ public class Database extends SQLiteOpenHelper {
 
     public int countOrdersInProductList() {
         int maxid = 0;
-        String countQuery = "SELECT MAX("+PRODUCT_LIST_COLUMN_ORDER_ID +") FROM " + PRODUCT_LIST;
+        String countQuery = "SELECT MAX(" + PRODUCT_LIST_COLUMN_ORDER_ID + ") FROM " + PRODUCT_LIST;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        if (cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             maxid = cursor.getInt(0);
         }
@@ -436,10 +393,10 @@ public class Database extends SQLiteOpenHelper {
 
     public int countOrdersInTransactionList() {
         int maxid = 0;
-        String countQuery = "SELECT MAX("+TRANSACTIONS_COLUMN_ORDER_ID+") FROM " + TRANSACTIONS;
+        String countQuery = "SELECT MAX(" + TRANSACTIONS_COLUMN_ORDER_ID + ") FROM " + TRANSACTIONS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        if (cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             maxid = cursor.getInt(0);
         }
@@ -453,7 +410,7 @@ public class Database extends SQLiteOpenHelper {
         String countQuery = "SELECT * FROM " + PRODUCT_LIST + " WHERE NOT " + PRODUCT_LIST_COLUMN_ORDER_ID + " = " + myOrderId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        if (cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             maxid = cursor.getInt(0);
         }
@@ -523,51 +480,112 @@ public class Database extends SQLiteOpenHelper {
         return productListArray;
     }
 
-    public void deleteCustomer(int id)
-    {
+    public void deleteCustomer(int id) {
         SQLiteDatabase db = database.getWritableDatabase();
         String queryString = "DELETE FROM " + CUSTOMER + " WHERE " + CUSTOMER_COLUMN_CUST_ID + " = " + id;
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
+        ++deletedCustomers;
     }
 
-    public void deleteProduct(int id)
-    {
+    public void deleteProduct(int id) {
         SQLiteDatabase db = database.getWritableDatabase();
         String queryString = "DELETE FROM " + PRODUCT + " WHERE " + PRODUCT_COLUMN_PROD_ID + " = " + id;
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
+        ++deletedProducts;
     }
 
-    public void deleteEmployee(int id)
-    {
+    public void deleteEmployee(int id) {
         SQLiteDatabase db = database.getWritableDatabase();
         String queryString = "DELETE FROM " + EMPLOYEE + " WHERE " + EMPLOYEE_COLUMN_EMP_ID + " = " + id;
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
+        ++deletedEmployees;
     }
 
-    public void deleteOrder(int id)
-    {
+    public void deleteOrder(int id) {
         SQLiteDatabase db = database.getWritableDatabase();
         String queryString = "DELETE FROM " + ORDERS + " WHERE " + ORDER_COLUMN_ORDER_ID + " = " + id;
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
+        ++deletedOrders;
     }
 
-    public void deleteProductFromOrder(int id, int order_id)
-    {
+    public void deleteProductFromOrder(int id, int order_id) {
         SQLiteDatabase db = database.getWritableDatabase();
         String queryString = "DELETE FROM " + PRODUCT_LIST + " WHERE " + PRODUCT_LIST_COLUMN_PROD_ID + " = " + id + " AND " + PRODUCT_LIST_COLUMN_ORDER_ID + " = " + order_id;
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
     }
 
-    public void deleteTransactionFromOrder(int id, int order_id)
-    {
+    public void deleteTransactionFromOrder(int id, int order_id) {
         SQLiteDatabase db = database.getWritableDatabase();
         String queryString = "DELETE FROM " + TRANSACTIONS + " WHERE " + TRANSACTIONS_COLUMN_TR_ID + " = " + id + " AND " + TRANSACTIONS_COLUMN_ORDER_ID + " = " + order_id;
         Cursor cursor = db.rawQuery(queryString, null);
         cursor.moveToFirst();
     }
+
+    public void updateCustomer(CustomModel customModel) {
+        String id = String.valueOf(customModel.getCust_id() + 1 + getDeletedCustomers());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(CUSTOMER_COLUMN_NAME, customModel.getName());
+        cv.put(CUSTOMER_COLUMN_POSTAL, customModel.getPostal());
+        cv.put(CUSTOMER_COLUMN_STATE, customModel.getState());
+        cv.put(CUSTOMER_COLUMN_CITY, customModel.getCity());
+        cv.put(CUSTOMER_COLUMN_ADDRESS, customModel.getAddress());
+
+        db.update(CUSTOMER, cv, "CUST_ID = ?", new String[]{id});
+    }
+
+    public void updateProduct(ProductModel productModel) {
+        String id = String.valueOf(productModel.getProd_id() + 1 + getDeletedProducts());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(PRODUCT_COLUMN_NAME, productModel.getName());
+        cv.put(PRODUCT_COLUMN_TYPE, productModel.getType());
+        cv.put(PRODUCT_COLUMN_START_DATE, productModel.getStartDate());
+        cv.put(PRODUCT_COLUMN_END_DATE, productModel.getEndDate());
+
+        db.update(PRODUCT, cv, "PROD_ID = ?", new String[]{id});
+    }
+
+    public void updateEmployee(EmpModel empModel) {
+        String id = String.valueOf(empModel.getEmp_id() + 1 + getDeletedEmployees());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(EMPLOYEE_COLUMN_NAME, empModel.getName());
+        cv.put(EMPLOYEE_COLUMN_TITLE, empModel.getTitle());
+        cv.put(EMPLOYEE_COLUMN_DEPARTMENT, empModel.getDepartment());
+        cv.put(EMPLOYEE_COLUMN_OFFICE, empModel.getOffice());
+        cv.put(EMPLOYEE_COLUMN_SUPERIOR, empModel.getSuperior());
+        cv.put(EMPLOYEE_COLUMN_START_DATE, empModel.getStartDate());
+        cv.put(EMPLOYEE_COLUMN_END_DATE, empModel.getEndDate());
+
+        db.update(EMPLOYEE, cv, "EMP_ID = ?", new String[]{id});
+    }
+
+    public void updateOrder(OrderModel orderModel) {
+        String id = String.valueOf(orderModel.getOrder_id());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ORDER_COLUMN_CUSTOMER, orderModel.getCustomer());
+        cv.put(ORDER_COLUMN_STATUS, orderModel.getStatus());
+        cv.put(ORDER_COLUMN_EMPLOYEE, orderModel.getEmp());
+        cv.put(ORDER_COLUMN_START_DATE, orderModel.getStartDate());
+        cv.put(ORDER_COLUMN_END_DATE, orderModel.getEndDate());
+        cv.put(ORDER_COLUMN_SUM, orderModel.getSum());
+
+        db.update(ORDERS, cv, "ORDER_ID = ?", new String[]{id});
+    }
+
 }

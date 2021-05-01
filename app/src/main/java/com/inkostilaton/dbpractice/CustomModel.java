@@ -18,6 +18,10 @@ public class CustomModel {
         this.address = address;
     }
 
+    public int getCust_id() {
+        return cust_id;
+    }
+
     public String getName() {
         return name;
     }

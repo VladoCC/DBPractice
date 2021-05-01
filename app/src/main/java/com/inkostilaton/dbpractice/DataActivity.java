@@ -131,7 +131,10 @@ public class DataActivity extends AppCompatActivity {
     public void openAdd(int index) {
         Intent intent = getAddIntent();
         intent.putExtra("index", index);
+        finish();
+        overridePendingTransition(0, 0);
         startActivityForResult(intent, 0);
+        overridePendingTransition(0, 0);
     }
 
     @Override

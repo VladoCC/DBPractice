@@ -96,4 +96,5 @@ public class CustomAdapter extends DataAdapter {
         Customer removableCustomer = customers.get(index);
         database.deleteCustomer(removableCustomer.id);
     }
+
 }

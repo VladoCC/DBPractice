@@ -173,4 +173,5 @@ public class OrderAdapter extends DataAdapter {
         Order removableOrder = orders.get(index);
         database.deleteOrder(removableOrder.id);
     }
+
 }

@@ -22,6 +22,9 @@ public class EmpModel {
         this.endDate = endDate;
     }
 
+    public int getEmp_id() {
+        return emp_id;
+    }
 
     public String getName() {
         return name;
