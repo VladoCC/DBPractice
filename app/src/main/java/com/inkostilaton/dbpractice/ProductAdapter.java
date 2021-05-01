@@ -21,12 +21,14 @@ public class ProductAdapter extends DataAdapter {
     }
 
     public class Product implements VisibilityList.Searchable {
+        int id;
         String name;
         String type;
         String startDate;
         String endDate;
 
-        public Product(String name, String type, String startDate, String endDate) {
+        public Product(int id, String name, String type, String startDate, String endDate) {
+            this.id = id;
             this.name = name;
             this.type = type;
             this.startDate = startDate;
@@ -79,7 +81,7 @@ public class ProductAdapter extends DataAdapter {
                 String startDate = cursor.getString(3);
                 String endDate = cursor.getString(4);
 
-                Product newProduct =  new Product(name, type, startDate, endDate);
+                Product newProduct =  new Product(prod_id, name, type, startDate, endDate);
                 products.add(newProduct);
             }
             while (cursor.moveToNext());
@@ -96,5 +98,11 @@ public class ProductAdapter extends DataAdapter {
         holder.type.setText(product.type);
         holder.startDate.setText(product.startDate);
         holder.endDate.setText(product.endDate);
+    }
+
+    @Override
+    protected void delete(int index) {
+        Product removableProduct = products.get(index);
+        database.deleteProduct(removableProduct.id);
     }
 }

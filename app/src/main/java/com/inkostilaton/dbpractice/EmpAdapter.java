@@ -21,6 +21,7 @@ public class EmpAdapter extends DataAdapter {
     }
 
     public class Employee implements VisibilityList.Searchable {
+        int id;
         String name;
         String title;
         String department;
@@ -29,7 +30,8 @@ public class EmpAdapter extends DataAdapter {
         String startDate;
         String endDate;
 
-        public Employee(String name, String title, String department, String office, String superior, String startDate, String endDate) {
+        public Employee(int id, String name, String title, String department, String office, String superior, String startDate, String endDate) {
+            this.id = id;
             this.name = name;
             this.title = title;
             this.department = department;
@@ -95,7 +97,7 @@ public class EmpAdapter extends DataAdapter {
                 String startDate = cursor.getString(6);
                 String endDate = cursor.getString(7);
 
-                Employee newEmployee =  new Employee(name, title, department, office, superior, startDate, endDate);
+                Employee newEmployee =  new Employee(emp_id, name, title, department, office, superior, startDate, endDate);
                 employees.add(newEmployee);
             }
             while (cursor.moveToNext());
@@ -115,5 +117,11 @@ public class EmpAdapter extends DataAdapter {
         holder.superior.setText(emp.superior);
         holder.startDate.setText(emp.startDate);
         holder.endDate.setText(emp.endDate);
+    }
+
+    @Override
+    protected void delete(int index) {
+        Employee removableEmployee = employees.get(index);
+        database.deleteEmployee(removableEmployee.id);
     }
 }

@@ -23,6 +23,7 @@ public class OrderAdapter extends DataAdapter {
     }
 
     public class Order implements VisibilityList.Searchable {
+        int id;
         String customer;
         String status;
         String emp;
@@ -33,7 +34,8 @@ public class OrderAdapter extends DataAdapter {
         String[] products;
         Transaction[] transactions;
 
-        public Order(String customer, String status, String emp, String startDate, String endDate, int sum, String[] products, Transaction[] transactions) {
+        public Order(int id, String customer, String status, String emp, String startDate, String endDate, int sum, String[] products, Transaction[] transactions) {
+            this.id = id;
             this.customer = customer;
             this.status = status;
             this.emp = emp;
@@ -135,7 +137,7 @@ public class OrderAdapter extends DataAdapter {
                     Transaction newTransaction = new Transaction(modelArray[i].date, modelArray[i].value);
                     transactionArray[i] = newTransaction;
                 }
-                Order newOrder =  new Order(customer, status, emp, startDate, endDate, Integer.parseInt(sum), database.getProductListOfOrder(order_id), transactionArray);
+                Order newOrder =  new Order(order_id, customer, status, emp, startDate, endDate, Integer.parseInt(sum), database.getProductListOfOrder(order_id), transactionArray);
                 orders.add(newOrder);
             }
             while (cursor.moveToNext());
@@ -164,5 +166,11 @@ public class OrderAdapter extends DataAdapter {
         for (Transaction transaction: order.transactions) {
             holder.addTransaction(transaction.value, transaction.date);
         }
+    }
+
+    @Override
+    protected void delete(int index) {
+        Order removableOrder = orders.get(index);
+        database.deleteOrder(removableOrder.id);
     }
 }

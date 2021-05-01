@@ -59,11 +59,13 @@ public class Database extends SQLiteOpenHelper {
     public static final String ORDER_COLUMN_SUM = "SUM";
 
     public static final String TRANSACTIONS = "TRANSACTIONS";
+    public static final String TRANSACTIONS_COLUMN_TR_ID = "TR_ID";
     public static final String TRANSACTIONS_COLUMN_DATE = "TR_DATE";
     public static final String TRANSACTIONS_COLUMN_VALUE = "VALUE";
     public static final String TRANSACTIONS_COLUMN_ORDER_ID = "ORDER_ID";
 
     public static final String PRODUCT_LIST = "PRODUCT_LIST";
+    public static final String PRODUCT_LIST_COLUMN_PROD_ID = "PROD_IN_LIST_ID";
     public static final String PRODUCT_LIST_COLUMN_ORDER_ID = "ORDER_ID";
     public static final String PRODUCT_LIST_COLUMN_PRODUCT_NAME = "PRODUCT_NAME";
 
@@ -87,9 +89,9 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(createProductTypeTable);
         String createOrderTable = "CREATE TABLE " + ORDERS + " (" + ORDER_COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ORDER_COLUMN_CUSTOMER + " TEXT, " + ORDER_COLUMN_STATUS + " TEXT, " + ORDER_COLUMN_EMPLOYEE + " TEXT, " + ORDER_COLUMN_START_DATE + " TEXT, " + ORDER_COLUMN_END_DATE + " TEXT, " + ORDER_COLUMN_SUM + " TEXT)";
         db.execSQL(createOrderTable);
-        String createTransactionTable = "CREATE TABLE " + TRANSACTIONS + " (" + TRANSACTIONS_COLUMN_DATE + " TEXT, " + TRANSACTIONS_COLUMN_VALUE + " INT, " + TRANSACTIONS_COLUMN_ORDER_ID + " INT)";
+        String createTransactionTable = "CREATE TABLE " + TRANSACTIONS + " (" + TRANSACTIONS_COLUMN_TR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TRANSACTIONS_COLUMN_DATE + " TEXT, " + TRANSACTIONS_COLUMN_VALUE + " INT, " + TRANSACTIONS_COLUMN_ORDER_ID + " INT)";
         db.execSQL(createTransactionTable);
-        String createProductListTable = "CREATE TABLE " + PRODUCT_LIST + " (" + PRODUCT_LIST_COLUMN_ORDER_ID + " TEXT, " + PRODUCT_LIST_COLUMN_PRODUCT_NAME + " TEXT)";
+        String createProductListTable = "CREATE TABLE " + PRODUCT_LIST + " (" + PRODUCT_LIST_COLUMN_PROD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + PRODUCT_LIST_COLUMN_ORDER_ID + " TEXT, " + PRODUCT_LIST_COLUMN_PRODUCT_NAME + " TEXT)";
         db.execSQL(createProductListTable);
     }
 
@@ -408,7 +410,25 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public int countRecords() {
-        String countQuery = "SELECT  * FROM " + ORDERS;
+        String countQuery = "SELECT * FROM " + ORDERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    public int findLastDifOrderProductInList(int myOrderId) {
+        String countQuery = "SELECT * FROM " + PRODUCT_LIST + " WHERE NOT " + PRODUCT_LIST_COLUMN_ORDER_ID + " = " + myOrderId;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    public int findLastDifOrderTransaction(int myOrderId) {
+        String countQuery = "SELECT * FROM " + TRANSACTIONS + " WHERE NOT " + TRANSACTIONS_COLUMN_ORDER_ID + " = " + myOrderId;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
@@ -465,5 +485,53 @@ public class Database extends SQLiteOpenHelper {
             productListArray[j] = productListOfOrder.get(j);
         }
         return productListArray;
+    }
+
+    public void deleteCustomer(int id)
+    {
+        SQLiteDatabase db = database.getWritableDatabase();
+        String queryString = "DELETE FROM " + CUSTOMER + " WHERE " + CUSTOMER_COLUMN_CUST_ID + " = " + id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+    }
+
+    public void deleteProduct(int id)
+    {
+        SQLiteDatabase db = database.getWritableDatabase();
+        String queryString = "DELETE FROM " + PRODUCT + " WHERE " + PRODUCT_COLUMN_PROD_ID + " = " + id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+    }
+
+    public void deleteEmployee(int id)
+    {
+        SQLiteDatabase db = database.getWritableDatabase();
+        String queryString = "DELETE FROM " + EMPLOYEE + " WHERE " + EMPLOYEE_COLUMN_EMP_ID + " = " + id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+    }
+
+    public void deleteOrder(int id)
+    {
+        SQLiteDatabase db = database.getWritableDatabase();
+        String queryString = "DELETE FROM " + ORDERS + " WHERE " + ORDER_COLUMN_ORDER_ID + " = " + id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+    }
+
+    public void deleteProductFromOrder(int id, int order_id)
+    {
+        SQLiteDatabase db = database.getWritableDatabase();
+        String queryString = "DELETE FROM " + PRODUCT_LIST + " WHERE " + PRODUCT_LIST_COLUMN_PROD_ID + " = " + id + " AND " + PRODUCT_LIST_COLUMN_ORDER_ID + " = " + order_id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+    }
+
+    public void deleteTransactionFromOrder(int id, int order_id)
+    {
+        SQLiteDatabase db = database.getWritableDatabase();
+        String queryString = "DELETE FROM " + TRANSACTIONS + " WHERE " + TRANSACTIONS_COLUMN_TR_ID + " = " + id + " AND " + TRANSACTIONS_COLUMN_ORDER_ID + " = " + order_id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
     }
 }

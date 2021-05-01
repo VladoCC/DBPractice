@@ -21,7 +21,7 @@ public abstract class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        toolbar = findViewById(R.id.add_toolbar); // todo rename
+        toolbar = findViewById(R.id.add_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackground(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));

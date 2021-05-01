@@ -189,7 +189,8 @@ public class EditOrderActivity extends EditActivity {
     }
 
     private void unlinkProduct(int index) {
-
+        int offset = database.findLastDifOrderProductInList(ordersNow);
+        database.deleteProductFromOrder(offset + index + 1, ordersNow);
     }
 
     private void addProductToList(int id, String name) {
@@ -205,7 +206,8 @@ public class EditOrderActivity extends EditActivity {
     }
 
     private void removeTransaction(int index) {
-
+        int offset = database.findLastDifOrderTransaction(ordersNow);
+        database.deleteTransactionFromOrder(offset + index + 1, ordersNow);
     }
 
     @Override

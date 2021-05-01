@@ -62,9 +62,7 @@ public abstract class DataAdapter extends SwipeAdapter {
         }
     }
 
-    protected void delete(int index) {
-
-    }
+    protected abstract void delete(int index);
 
     protected abstract RecyclerView.ViewHolder onCreateCustomViewHolder(View view);
 

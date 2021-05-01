@@ -36,7 +36,7 @@ public class CustomAdapter extends DataAdapter {
                 String city = cursor.getString(4);
                 String address = cursor.getString(5);
 
-                Customer newCustomer =  new Customer(name, postal + ", " + state + ", " + city + ", " + address);
+                Customer newCustomer =  new Customer(cust_id, name, postal + ", " + state + ", " + city + ", " + address);
                 customers.add(newCustomer);
             }
             while (cursor.moveToNext());
@@ -46,10 +46,12 @@ public class CustomAdapter extends DataAdapter {
     }
 
     private class Customer implements VisibilityList.Searchable {
+        int id;
         String name;
         String address;
 
-        public Customer(String name, String address) {
+        public Customer(int id, String name, String address) {
+            this.id = id;
             this.name = name;
             this.address = address;
         }
@@ -87,5 +89,11 @@ public class CustomAdapter extends DataAdapter {
         CustomViewHolder holder = (CustomViewHolder) viewHolder;
         holder.name.setText(customer.name);
         holder.address.setText(customer.address);
+    }
+
+    @Override
+    protected void delete(int index) {
+        Customer removableCustomer = customers.get(index);
+        database.deleteCustomer(removableCustomer.id);
     }
 }
