@@ -57,6 +57,8 @@ public abstract class DataAdapter extends SwipeAdapter {
             notifyItemRemoved(position);
             Toast toast = Toast.makeText(mContext, "Deleted item at position " + position, Toast.LENGTH_SHORT);
             toast.show();
+            initData();
+            notifyDataSetChanged();
         } else {
             ((DataActivity) mContext).openAdd(position);
         }

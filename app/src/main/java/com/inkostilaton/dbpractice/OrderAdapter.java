@@ -137,6 +137,10 @@ public class OrderAdapter extends DataAdapter {
                     Transaction newTransaction = new Transaction(modelArray[i].date, modelArray[i].value);
                     transactionArray[i] = newTransaction;
                 }
+                if (sum.isEmpty())
+                {
+                    sum = "0";
+                }
                 Order newOrder =  new Order(order_id, customer, status, emp, startDate, endDate, Integer.parseInt(sum), database.getProductListOfOrder(order_id), transactionArray);
                 orders.add(newOrder);
             }
